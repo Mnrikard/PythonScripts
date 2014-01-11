@@ -14,7 +14,12 @@ class compareDir:
 		for root,dirs,files in os.walk(self.directory):
 			if lcase:
 				root = root.lower()
-			self.folders[root.replace(self.directory,"")] = files
+			
+			root = root.replace(self.directory,"")
+			if len(root) > 0 and (root[0]=="/" or root[0] == "\\"):
+				root = root[1:]
+			
+			self.folders[root] = files
 
 def compareFileTexts(file1, file2):
 	file = open(file1,"r")
