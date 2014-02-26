@@ -1,3 +1,7 @@
+#! /bin/bash
+# Script to run vim in cygwin.
+# Make sure you set ff=unix
+#
 fs=${1/\/cygdrive\/c\//c:\\}
 fs=${fs/\/c\//c:\\}
 fs=${fs/~/c:\\cygwin\\home\\Matthew}
