@@ -1,0 +1,5 @@
+fs=${1/\/cygdrive\/c\//c:\\}
+fs=${fs/\/c\//c:\\}
+fs=${fs/~/c:\\cygwin\\home\\Matthew}
+fs=${fs//\//\\}
+/c/Progra~1/Vim/vim73/vim.exe "$fs"
