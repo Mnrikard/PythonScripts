@@ -10,7 +10,7 @@ function ReadXkcd {
 
 function ReadQwantz {
 	local html=$(curl "http://www.qwantz.com/index.php")
-	local img=$(echo $html | grep -Po '\<img src="(.+?\.png)" class="comic" .+?\>')
+	local img=$(echo $html | grep -Po '\<img src="([^"]+?\.png)" class="comic" .+?\>')
 	local text1=$(echo $img | grep -Po '(?<=title=").+?(?=")')
 	local text2=$(echo $html | grep -Po '(?<=mailto:ryan@qwantz.com\?subject=).+?(?=")')
 	local rss=$(curl "http://www.rsspect.com/rss/qwantz.xml")
@@ -19,3 +19,13 @@ function ReadQwantz {
 	
 	echo "${img}<ul><li>${text1}</li><li>\r\n${text2}</li><li>${text3}</li></ul>"
 }
+
+function ReadPA {
+    local html=$(curl "http://www.penny-arcade.com/comic/")
+    local div=$(echo $html | grep -Po '\<div id="comicFrame".+?\</div\>')
+    local img=$(echo $div | grep -m 1 -Po '\<img.+?\>')
+
+    echo $img
+}
+
+echo "$(ReadQwantz)<hr/>$(ReadXkcd)<hr/>$(ReadPA)" | mail -s "Daily Comic" -a "Content-type:text/html;"  mnrikard@gmail.com

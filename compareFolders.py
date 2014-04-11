@@ -60,6 +60,7 @@ def compare2(dir1, dir2, compareText):
 		if root not in comp1.folders:
 			print("folder: " + root + " exists in " + dir2 + " but not in " + dir1)
 	
+#-----------------------
 if __name__ == "__main__":
 	dir1 = None
 	dir2 = None
