@@ -15,7 +15,8 @@ function ReadQwantz {
 	local text2=$(echo $html | grep -Po '(?<=mailto:ryan@qwantz.com\?subject=).+?(?=")')
 	local rss=$(curl "http://www.rsspect.com/rss/qwantz.xml")
 	local titles=$(echo $rss | grep -Po '\<item\>\s+\<title\>.+?\</title\>')
-	local text3="${titles%%/title*}/title></item>"
+	local text3="${titles%%</title*}"
+    text3="${text3#*<title>}"
 	
 	echo "${img}<ul><li>${text1}</li><li>\r\n${text2}</li><li>${text3}</li></ul>"
 }
