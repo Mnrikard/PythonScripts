@@ -2,7 +2,7 @@
 
 function ReadXkcd {
 	local html=$(curl "http://www.xkcd.com/")
-	local img=$(echo $html | grep -Po '\<img src="http://imgs.xkcd.com/comics.+?\>')
+	local img=$(echo $html | grep -Po '\<img src="//imgs.xkcd.com/comics.+?\>')
 	local comicText=$(echo $img | grep -Po '(?<=title=").+?(?=")')
 	
 	echo "${img}<ul><li>${comicText}</li></ul>";
@@ -22,7 +22,7 @@ function ReadQwantz {
 }
 
 function ReadPA {
-    local html=$(curl "http://www.penny-arcade.com/comic/")
+    local html=$(curl "http://www.penny-arcade.com/comic")
     local div=$(echo $html | grep -Po '\<div id="comicFrame".+?\</div\>')
     local img=$(echo $div | grep -m 1 -Po '\<img.+?\>')
 
