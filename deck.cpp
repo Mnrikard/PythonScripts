@@ -38,7 +38,7 @@ class Deck
 	
 	void createDeck()
 	{
-		string suits[4] = {"Clubs","Diamonda","Hearts","Spades"};
+		string suits[4] = {"Clubs","Diamonds","Hearts","Spades"};
 		string dn [13] = {"Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"};
 
 		for(int i=0;i<4;i++)
