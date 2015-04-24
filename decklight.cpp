@@ -22,7 +22,7 @@ class Card
 	}
 	string GetCardName()
 	{
-		return this->Denomination+" of "+this->Suit;
+		return this->Suit+this->Denomination;
 	}
 };
 
@@ -39,8 +39,8 @@ class Deck
 	
 	void createDeck()
 	{
-		string suits[4] = {"Clubs","Diamonds","Hearts","Spades"};
-		string dn [13] = {"Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"};
+		string suits[4] = {"♠","♡","♢","♣"};
+		string dn [13] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
 
 		for(int i=0;i<4;i++)
 		{
