@@ -130,10 +130,12 @@ set nocompatible
 	set foldlevelstart=99
 	set foldmethod=indent
 	set nowrap
+	set list
+	set listchars=tab:▶·,trail:·
 	let mapleader=" "
 	set encoding=utf8
 	set laststatus=2
-	colorscheme vividchalk 
+	colorscheme vividchalk
 "}}}
 
 "Maps{{{
