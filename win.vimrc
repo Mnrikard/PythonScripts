@@ -3,7 +3,11 @@ set nocompatible
 "VundleSection{{{
 	filetype off
 	" set the runtime path to include Vundle and initialize
-	set rtp+=c:\users\mrikard\vimfiles\bundle\Vundle.vim
+	if has("win32")
+		set rtp+=c:\users\mrikard\vimfiles\bundle\Vundle.vim
+	else
+		set rtp+=~/.vim/bundle/Vundle.vim
+	endif
 	call vundle#begin()
 
 	" let Vundle manage Vundle, required
@@ -20,7 +24,7 @@ set nocompatible
 	Plugin 'ervandew/supertab'
 	Plugin 'OmniSharp/Omnisharp-vim'
 	Plugin 'tpope/vim-vividchalk'
-	Plugin 'Shougo/unite.vim'
+	Plugin 'kien/ctrlp.vim'
 	Plugin 'easymotion/vim-easymotion'
 	Plugin 'adamclerk/vim-razor'
 
@@ -109,6 +113,7 @@ set nocompatible
 	set hidden
 	set confirm
 	set wildmenu
+	set wildignore+=~*,*.png,*.jpg,*.exe,*.dll,*.swp
 	set showcmd
 	set hlsearch
 	set ignorecase
@@ -131,7 +136,7 @@ set nocompatible
 	set foldmethod=indent
 	set nowrap
 	set list
-	set listchars=tab:▶·,trail:·
+	set listchars=tab:»\ ,trail:·
 	let mapleader=" "
 	set encoding=utf8
 	set laststatus=2
@@ -141,8 +146,7 @@ set nocompatible
 "Maps{{{
 	nnoremap <C-L> :nohl<CR><C-L>
 	nnoremap <C-J> a<CR><Esc>k$
-	nnoremap <C-O> O<Esc>
-	nnoremap <C-o> o<Esc>
+	nnoremap <leader>nl o<Esc>
 	vnoremap <C-c> "+y
 	nnoremap <C-tab> :bn<Enter>
 	nnoremap <C-S-tab> :bprev<Enter>
@@ -157,6 +161,7 @@ set nocompatible
 	nnoremap <leader>sv :source $MYVIMRC<cr>
 	inoremap jjk <Esc>
 	nnoremap <leader>kd execute "normal! gg=G"
+	nnoremap wwh :wincmd W<cr>
 "}}}
 
 "AutoCmd{{{
