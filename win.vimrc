@@ -3,7 +3,11 @@ set nocompatible
 "VundleSection{{{
 	filetype off
 	" set the runtime path to include Vundle and initialize
-	set rtp+=c:\users\mrikard\vimfiles\bundle\Vundle.vim
+	if has("win32")
+		set rtp+=c:\users\mrikard\vimfiles\bundle\Vundle.vim
+	else
+		set rtp+=~/.vim/bundle/Vundle.vim
+	endif
 	call vundle#begin()
 
 	" let Vundle manage Vundle, required
@@ -20,7 +24,7 @@ set nocompatible
 	Plugin 'ervandew/supertab'
 	Plugin 'OmniSharp/Omnisharp-vim'
 	Plugin 'tpope/vim-vividchalk'
-	Plugin 'Shougo/unite.vim'
+	Plugin 'kien/ctrlp.vim'
 	Plugin 'easymotion/vim-easymotion'
 	Plugin 'adamclerk/vim-razor'
 
@@ -109,6 +113,7 @@ set nocompatible
 	set hidden
 	set confirm
 	set wildmenu
+	set wildignore+=~*,*.png,*.jpg,*.exe,*.dll,*.swp
 	set showcmd
 	set hlsearch
 	set ignorecase
@@ -130,17 +135,18 @@ set nocompatible
 	set foldlevelstart=99
 	set foldmethod=indent
 	set nowrap
+	set list
+	set listchars=tab:»\ ,trail:·
 	let mapleader=" "
 	set encoding=utf8
 	set laststatus=2
-	colorscheme vividchalk 
+	colorscheme vividchalk
 "}}}
 
 "Maps{{{
 	nnoremap <C-L> :nohl<CR><C-L>
 	nnoremap <C-J> a<CR><Esc>k$
-	nnoremap <C-O> O<Esc>
-	nnoremap <C-o> o<Esc>
+	nnoremap <leader>nl o<Esc>
 	vnoremap <C-c> "+y
 	nnoremap <C-tab> :bn<Enter>
 	nnoremap <C-S-tab> :bprev<Enter>
@@ -155,6 +161,10 @@ set nocompatible
 	nnoremap <leader>sv :source $MYVIMRC<cr>
 	inoremap jjk <Esc>
 	nnoremap <leader>kd execute "normal! gg=G"
+	inoremap wwh <Esc>:wincmd W<cr>
+	nnoremap wwh :wincmd W<cr>
+	nnoremap <leader>h :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+	nnoremap <leader>rr :set operatorfunc=Refactor<cr>g@
 "}}}
 
 "AutoCmd{{{
@@ -171,6 +181,25 @@ syntax on
 syntax sync minlines=1000
 
 "Commands {{{
+	function! Refactor(type)
+		let toname=input('New Name:')
+
+		let savedReg = @@
+		echo a:type
+		if a:type  ==# 'v'
+			normal! y
+		elseif a:type ==# 'char' || a:type ==# 'line'
+			normal! viwy
+		else
+			return
+		endif
+
+		execute 'normal! m0'
+		execute 'normal! :%s/\v<'.@@.'>/'.toname."/g\<cr>"
+		execute "normal! `0\<cr>"
+		let @@ = savedReg
+	endfunction
+
 	command! Nom execute "%s///g"
 	command! BM execute "bufdo | bd!"
 
