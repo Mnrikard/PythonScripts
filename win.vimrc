@@ -161,7 +161,10 @@ set nocompatible
 	nnoremap <leader>sv :source $MYVIMRC<cr>
 	inoremap jjk <Esc>
 	nnoremap <leader>kd execute "normal! gg=G"
+	inoremap wwh <Esc>:wincmd W<cr>
 	nnoremap wwh :wincmd W<cr>
+	nnoremap <leader>h :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+	nnoremap <leader>rr :set operatorfunc=Refactor<cr>g@
 "}}}
 
 "AutoCmd{{{
@@ -178,6 +181,25 @@ syntax on
 syntax sync minlines=1000
 
 "Commands {{{
+	function! Refactor(type)
+		let toname=input('New Name:')
+
+		let savedReg = @@
+		echo a:type
+		if a:type  ==# 'v'
+			normal! y
+		elseif a:type ==# 'char' || a:type ==# 'line'
+			normal! viwy
+		else
+			return
+		endif
+
+		execute 'normal! m0'
+		execute 'normal! :%s/\v<'.@@.'>/'.toname."/g\<cr>"
+		execute "normal! `0\<cr>"
+		let @@ = savedReg
+	endfunction
+
 	command! Nom execute "%s///g"
 	command! BM execute "bufdo | bd!"
 
