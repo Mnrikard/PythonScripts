@@ -27,6 +27,8 @@ set nocompatible
 	Plugin 'kien/ctrlp.vim'
 	Plugin 'easymotion/vim-easymotion'
 	Plugin 'adamclerk/vim-razor'
+	Plugin 'scrooloose/nerdtree'
+	Plugin 'vim-airline/vim-airline-themes'
 
 	call vundle#end()            " required
 	filetype plugin indent on    " required
@@ -160,7 +162,7 @@ set nocompatible
 	nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 	nnoremap <leader>sv :source $MYVIMRC<cr>
 	inoremap jjk <Esc>
-	nnoremap <leader>kd execute "normal! gg=G"
+	nnoremap <leader>kd :execute "normal! mhgg=G<C-v><cr>`h"<cr>
 	inoremap wwh <Esc>:wincmd W<cr>
 	nnoremap wwh :wincmd W<cr>
 	nnoremap <leader>h :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
@@ -174,6 +176,9 @@ augroup myAutoCmds
 	autocmd BufEnter * syntax sync minlines=1000
 	autocmd FileType vim setlocal foldmethod=marker
 	autocmd FileType vim setlocal foldlevel=0
+	autocmd FileType markdown setlocal nonumber
+	autocmd FileType markdown setlocal wrap
+	autocmd FileType markdown setlocal colorcolumn=80
 augroup end
 "}}}
 
@@ -195,13 +200,14 @@ syntax sync minlines=1000
 		endif
 
 		execute 'normal! m0'
-		execute 'normal! :%s/\v<'.@@.'>/'.toname."/g\<cr>"
+		execute 'normal! :%s/\v<'.@@.'>/'.toname."/g<C-v><cr>"
 		execute "normal! `0\<cr>"
 		let @@ = savedReg
 	endfunction
 
 	command! Nom execute "%s///g"
 	command! BM execute "bufdo | bd!"
+	command! BD execute "bp | sp | bn | bd"
 
 	function! MoveLine(lnum)
 		let currline=line('.')
